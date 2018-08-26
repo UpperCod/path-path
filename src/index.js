@@ -55,8 +55,8 @@ export function create(path) {
 }
 
 export function resolve(origin, merge) {
-    let foldersOrigin = origin.match(FOLDERS),
-        foldersMerge = merge.match(FOLDERS),
+    let foldersOrigin = origin.match(FOLDERS) || [],
+        foldersMerge = merge.match(FOLDERS) || [],
         folders = [""];
 
     for (let i = 0; i < foldersMerge.length; i++) {
