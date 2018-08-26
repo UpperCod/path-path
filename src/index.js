@@ -4,7 +4,7 @@ const FOLDER = "[^\\/]";
 const SPLIT = "(?:\\/){0,1}";
 
 export function getSearch(search, params = {}) {
-    search = search.replace("?", "").match(/[^\&]+/g) || [];
+    search = search.match(/[^\&]+/g) || [];
     return search.reduce((params, item) => {
         let position = item.search("="),
             param = item.slice(0, position >>> 0),
@@ -87,10 +87,10 @@ export function resolve(origin, merge) {
 }
 
 export function compare(router, path, params = {}) {
-    let query = path.match(/([^\?]+)(.*)/);
-    if (query[2]) {
-        params.query = getSearch(query[2]);
-        path = query[1];
+    let query = path.match(/(?:\/){0,1}\?(.*)/);
+    if (query) {
+        params.query = getSearch(query[1]);
+        path = path.slice(0, query.index);
     }
     let status = path.match(router.regExp);
 

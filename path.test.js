@@ -88,7 +88,7 @@ describe("Test getSearch", () => {
     test("1: merge by type parameter (:)", () => {
         expect(getSearch("id=10&url=www.example.com?id=100")).toEqual({
             id: "10",
-            url: "www.example.comid=100"
+            url: "www.example.com?id=100"
         });
     });
 
@@ -98,7 +98,7 @@ describe("Test getSearch", () => {
                 "url_1=www.example.com?id=100&url_2=www.example.com?id=200&url_3=www.example.com?id=300"
             )
         ).toEqual({
-            url_1: "www.example.comid=100",
+            url_1: "www.example.com?id=100",
             url_2: "www.example.com?id=200",
             url_3: "www.example.com?id=300"
         });
