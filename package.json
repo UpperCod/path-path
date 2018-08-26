@@ -1,6 +1,6 @@
 {
   "name": "path-path",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "path-path, transform pathname to regular expressions",
   "main": "dist/path-path.js",
   "umd:main": "dist/path-path.umd.js",
