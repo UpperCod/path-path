@@ -3,6 +3,16 @@ const FOLDERS = /([^\/]+)/g;
 const FOLDER = "[^\\/]";
 const SPLIT = "(?:\\/){0,1}";
 
+function relative(str) {
+    let dotdot = /\/[^\/]+\/(\.){2}/,
+        dot = /\/(\.){1}/;
+    str = str.replace(dotdot, "");
+    if (dotdot.test(str)) str = relative(str);
+    str = str.replace(dot, "");
+    if (dotdot.test(str)) str = relative(str);
+    return str;
+}
+
 export function getSearch(search, params = {}) {
     search = search.match(/[^\&]+/g) || [];
     return search.reduce((params, item) => {
@@ -55,34 +65,34 @@ export function create(path) {
 }
 
 export function resolve(origin, merge) {
-    let foldersOrigin = origin.match(FOLDERS) || [],
-        foldersMerge = merge.match(FOLDERS) || [],
-        folders = [""];
+    let folders = [""];
 
-    for (let i = 0; i < foldersMerge.length; i++) {
-        let merge = foldersMerge[i],
-            origin = foldersOrigin[i],
-            status = merge.match(CAPTURE),
-            option = status ? status[2] : merge;
+    merge =
+        merge[0] === "/"
+            ? merge
+            : origin + (origin[origin.length] === "/" ? "" : "/") + merge;
+
+    origin = origin.match(FOLDERS) || [];
+    merge = relative(merge).match(FOLDERS) || [];
+
+    for (let i = 0; i < merge.length; i++) {
+        let status = merge[i].match(CAPTURE),
+            option = status ? status[2] : merge[i];
 
         switch (option) {
             case "?":
-                if (origin) folders.push(origin);
+                if (origin[i]) folders.push(origin[i]);
                 break;
             case "...":
-                folders = folders.concat(foldersOrigin.slice(i));
+                folders = folders.concat(origin.slice(i));
                 break;
-
             default:
                 folders.push(
-                    status
-                        ? origin || option
-                        : option === "**"
-                            ? origin
-                            : option
+                    status || merge[i] === "**" ? origin[i] : merge[i]
                 );
         }
     }
+
     return folders.join("/");
 }
 
