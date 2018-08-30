@@ -1,6 +1,6 @@
 # path-path
 
-Create a regular expression to compare pathnames based on wildcards, similar to how **Express.js** does it.
+Create a regular expression to compare pathnames based on wildcards, similar to how **Express.js** does it, all in <760 bytes gzip.
 
 ## create( path: string ):{ path: string, regExp: RegExp, params: array }
 
@@ -80,4 +80,16 @@ resolve("/parent/child","/**/next") // "/parent/next"
 resolve("/parent/child/subchild","/parent/:any...") // "/parent/child/subchild"
 
 resolve("/parent/child","/**") // "/parent"
+```
+
+## join(a:string,b:string)
+
+It allows joining 2 path, averaging the intersection with the slash character **"/"**.
+
+```js
+import {join} from "path-path";
+
+join("/a","/b") // /a/b
+join("/a","b") // /a/b
+join("/a/","b") // /a/b
 ```

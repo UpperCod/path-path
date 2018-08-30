@@ -1,6 +1,6 @@
 # path-path
 
-Crea una expresión regular para comparar pathnames a base comodines, similar a como lo realiza **Express.js**.
+Crea una expresión regular para comparar pathnames a base comodines, similar a como lo realiza **Express.js**, todo en <760 bytes gzip
 
 ## create( path: string ):{ path: string, regExp: RegExp, params: array }
 
@@ -80,4 +80,16 @@ resolve("/parent/child","/**/next") // "/parent/next"
 resolve("/parent/child/subchild","/parent/:any...") // "/parent/child/subchild"
 
 resolve("/parent/child","/**") // "/parent"
+```
+
+## join(a:string,b:string)
+
+Permite unir 2 path, promediando la intersección con el caracter slash "/".
+
+```js
+import {join} from "path-path";
+
+join("/a","/b") // /a/b
+join("/a","b") // /a/b
+join("/a/","b") // /a/b
 ```

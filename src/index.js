@@ -3,6 +3,10 @@ const FOLDERS = /([^\/]+)/g;
 const FOLDER = "[^\\/]";
 const SPLIT = "(?:\\/){0,1}";
 
+export function join(a = "", b = "") {
+    return (a + "<?>" + b).replace(/(\/){0,1}\<\?\>(\/){0,1}/, "/");
+}
+
 function relative(str) {
     let dotdot = /\/[^\/]+\/(\.){2}/,
         dot = /\/(\.){1}/;

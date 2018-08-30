@@ -1,4 +1,4 @@
-let { create, compare, resolve, getSearch } = require("./dist/path-path");
+let { create, compare, resolve, getSearch, join } = require("./dist/path-path");
 
 describe("Test create and compare", () => {
     test("1: Static route", () => {
@@ -102,5 +102,23 @@ describe("Test getSearch", () => {
             url_2: "www.example.com?id=200",
             url_3: "www.example.com?id=300"
         });
+    });
+});
+
+describe("Test join", () => {
+    test("1: ", () => {
+        expect(join("folder", "folder")).toBe("folder/folder");
+    });
+
+    test("2: ", () => {
+        expect(join("folder", "/folder")).toBe("folder/folder");
+    });
+
+    test("3: ", () => {
+        expect(join("folder/", "folder")).toBe("folder/folder");
+    });
+
+    test("4: ", () => {
+        expect(join("folder/", "/folder")).toBe("folder/folder");
     });
 });
